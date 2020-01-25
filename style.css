@@ -1,0 +1,36 @@
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    border: 1px solid #000;
+    width: 400px;
+		height: 550px;
+		margin: 30px auto 0 auto;
+		display: flex;
+		flex-direction: column;
+}
+.screen {
+	border: 1px solid #000;
+	height: 150px;
+	width: 100%;
+}
+.button-side {
+	display: flex;
+}
+.first-container,
+.second-container,
+.third-container,
+.fourth-container {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+.first-container button,
+.second-container button,
+.third-container button,
+.fourth-container button{
+	flex: 1;
+}
