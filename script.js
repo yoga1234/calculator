@@ -1,5 +1,6 @@
 // getting tag from html
 let displayScreen = document.querySelector('.result-screen');
+let historyScreen = document.querySelector('.history-screen')
 let calcButton = document.querySelectorAll('button');
 let displayValue = "";
 let numberContainer;
@@ -46,9 +47,11 @@ function populateDisplay(e) {
   // check for the operation
   if(operatorTaken == "number") {
     displayScreen.insertAdjacentHTML('beforeend', valueTaken);
+    historyScreen.insertAdjacentHTML('beforeend', valueTaken);
     displayValue += valueTaken;
   } else if(operatorTaken == "operator") {
     displayScreen.insertAdjacentHTML('beforeend', valueTaken);
+    historyScreen.insertAdjacentHTML('beforeend', valueTaken);
     firstNumber = displayValue;
     operatorNumber = valueTaken;
     displayValue = '';
@@ -56,7 +59,8 @@ function populateDisplay(e) {
     secondNumber = displayValue;
     displayValue = '';
     result = operate(operatorNumber, firstNumber, secondNumber);
-    console.log(result);
+    displayScreen.innerHTML = '';
+    displayScreen.insertAdjacentHTML('beforeend', result);
   }
 
   // console.log(e.target.dataset.button.split(',')[1].trim());
