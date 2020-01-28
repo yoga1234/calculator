@@ -63,6 +63,7 @@ function equalInput() {
   displayScreen.innerHTML += result;
   historyScreen.innerHTML = '';
   historyScreen.innerHTML += firstNumber + operatorNumber + secondNumber;
+  firstNumber = result;
 }
 
 // updating the display
