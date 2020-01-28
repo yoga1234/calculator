@@ -97,7 +97,12 @@ function clearDisplay() {
 
 // delete display function
 function deleteDisplay() {
-  console.log(displayScreen.innerHTML.length);
+  let deleteContainer = [];
+  
+  for(let i = 0; i < displayScreen.innerHTML.length -1; i++) {
+    deleteContainer.push(displayScreen.innerHTML[i]);
+  }
+  displayScreen.innerHTML = deleteContainer.join('');
 }
 
 // button event listener
