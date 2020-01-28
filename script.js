@@ -39,34 +39,45 @@ function operate(operator, number1, number2) {
   }
 }
 
+// fragment from display function
+function numberInput(valueTaken) {
+  // update the display
+  displayScreen.innerHTML += valueTaken;
+  // add valueTaken into displayValue
+  displayValue += valueTaken;
+}
+function operatorInput(valueTaken) {
+  // if user click operator
+  displayScreen.innerHTML += valueTaken;
+  firstNumber = displayValue;
+  console.log(firstNumber);
+  operatorNumber = valueTaken;
+  displayValue = '';
+}
+function equalInput() {
+  // if user click equal sign
+  secondNumber = displayValue;
+  result = operate(operatorNumber, firstNumber, secondNumber);
+  displayScreen.innerHTML = '';
+  displayValue = result;
+  displayScreen.innerHTML += result;
+  historyScreen.innerHTML = '';
+  historyScreen.innerHTML += firstNumber + operatorNumber + secondNumber;
+}
+
 // updating the display
 function displayFunction(valueTaken, operatorTaken) {
   // check for the operation
   if(operatorTaken == "number") {
-    // update the display
-    displayScreen.insertAdjacentHTML('beforeend', `<span class="result-value">${valueTaken}</span>`);
-    // add valueTaken into displayValue
-    displayValue += valueTaken;
+    numberInput(valueTaken);
   } else if(operatorTaken == "operator") {
-    // if user click operator
-    displayScreen.insertAdjacentHTML('beforeend', `<span class="result-value">${valueTaken}</span>`);
-    firstNumber = displayValue;
-    console.log(firstNumber);
-    operatorNumber = valueTaken;
-    displayValue = '';
+    operatorInput(valueTaken);
   } else if(operatorTaken == "clear"){
     clearDisplay();
   } else if(operatorTaken == "delete"){
     deleteDisplay();
   } else {
-    // if user click equal sign
-    secondNumber = displayValue;
-    result = operate(operatorNumber, firstNumber, secondNumber);
-    displayScreen.innerHTML = '';
-    displayValue = result;
-    displayScreen.insertAdjacentHTML('beforeend', result);
-    historyScreen.innerHTML = '';
-    historyScreen.insertAdjacentHTML('beforeend', firstNumber + operatorNumber + secondNumber);
+    equalInput();
   }
 }
 
@@ -86,12 +97,7 @@ function clearDisplay() {
 
 // delete display function
 function deleteDisplay() {
-  let resultValue = document.querySelectorAll('.result-value');
-  if(!resultValue.length) {
-    return;
-  } else {
-    displayScreen.removeChild(displayScreen.lastChild);
-  }
+  console.log(displayScreen.innerHTML.length);
 }
 
 // button event listener
