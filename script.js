@@ -47,12 +47,18 @@ function numberInput(valueTaken) {
   displayValue += valueTaken;
 }
 function operatorInput(valueTaken) {
-  // if user click operator
-  displayScreen.innerHTML += valueTaken;
-  firstNumber = displayValue;
-  console.log(firstNumber);
-  operatorNumber = valueTaken;
-  displayValue = '';
+  // check if the first number is empty
+  if(firstNumber = '') {
+    return;
+  } else {
+    // if user click operator
+    displayScreen.innerHTML += valueTaken;
+    firstNumber = displayValue;
+    console.log(firstNumber);
+    operatorNumber = valueTaken;
+    displayValue = '';
+  }
+  
 }
 function equalInput() {
   // if user click equal sign
@@ -64,6 +70,8 @@ function equalInput() {
   historyScreen.innerHTML = '';
   historyScreen.innerHTML += firstNumber + operatorNumber + secondNumber;
   firstNumber = result;
+  secondNumber = '';
+  operatorNumber = '';
 }
 
 // updating the display
@@ -94,6 +102,11 @@ function populateDisplay(e) {
 function clearDisplay() {
   historyScreen.innerHTML = '';
   displayScreen.innerHTML = '';
+  displayValue = '';
+  firstNumber = '';
+  secondNumber = '';
+  operatorNumber = '';
+  result = '';
 }
 
 // delete display function
