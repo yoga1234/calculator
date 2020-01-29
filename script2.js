@@ -5,6 +5,19 @@ let resultDisplay = document.querySelector('.result-screen');
 // get all the button
 let calcButton = document.querySelectorAll('button');
 
+// define operation container
+let operationContainer = "";
+
+// function for number button
+function numberInput() {
+  console.log("you are pressing number");
+}
+
+// function for operation button
+function operationInput() {
+  console.log("this is from operation function");
+}
+
 // operate function
 function operate(e) {
   // get the operation that user click
@@ -16,11 +29,11 @@ function operate(e) {
   switch (operationTaken) {
     case "number":
       // number goes here
-      console.log("you are pressing number");
+      numberInput();
       break;
     case "operator":
       // operator goes here
-      console.log("you are pressing operator");
+      operationInput();
       break;
     case "clear":
       // clear goes here
