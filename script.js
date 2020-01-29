@@ -116,6 +116,10 @@ function deleteDisplay() {
   for(let i = 0; i < displayScreen.innerHTML.length -1; i++) {
     deleteContainer.push(displayScreen.innerHTML[i]);
   }
+  console.log(deleteContainer);
+  console.log(firstNumber);
+  console.log(secondNumber);
+  console.log(operatorNumber);
   displayScreen.innerHTML = deleteContainer.join('');
 }
 
