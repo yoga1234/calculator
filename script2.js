@@ -28,23 +28,18 @@ function operate(e) {
   // check for the operation
   switch (operationTaken) {
     case "number":
-      // number goes here
       numberInput();
       break;
     case "operator":
-      // operator goes here
       operationInput();
       break;
     case "clear":
-      // clear goes here
       console.log("you are pressing clear");
       break;
     case "delete":
-      // delete goes here
       console.log("you are pressing delete");
       break;
     case "equalSign":
-      // equal sign goes here
       console.log("you are pressing equal sign");
       break;
     default:
