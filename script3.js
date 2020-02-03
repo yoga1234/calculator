@@ -42,6 +42,7 @@ function mainFunc(e) {
     } else {
       display.textContent = displayedNum + keyContent;
     }
+    container.dataset.previousKeyType = 'number';
   }
   
   // user click on the operator key
@@ -51,6 +52,20 @@ function mainFunc(e) {
     action === 'multiply'  ||
     action === 'divide'
   ) {
+    // check if the value is exists
+    const firstValue = container.dataset.firstValue;
+    const operator = container.dataset.operator;
+    const secondValue = displayedNum;
+
+    // it's sufficient to check for firstValue and operator because secondValue always exists
+    if(
+      firstValue && 
+      operator &&
+      previousKeyType !== 'operator'
+    ) {
+      display.textContent = calculate(firstValue, operator, secondValue);
+    }
+
     key.classList.add('key-pressed');
     // add custom attribute
     container.dataset.previousKeyType = 'operator';
@@ -61,12 +76,20 @@ function mainFunc(e) {
 
   // user click on the decimal key
   if(action === 'decimal') {
-    display.textContent = displayedNum + '.';
+    // check if the display already have dot
+    if(!displayedNum.includes('.')) {
+      display.textContent = displayedNum + '.';
+    }
+    if(previousKeyType === 'operator') {
+      display.textContent = '0.';
+    }
+    container.dataset.previousKeyType = 'decimal';
   }
 
   // user click on the clear key
   if(action === 'clear') {
     console.log("you are pressed on the clear key");
+    container.dataset.previousKeyType = 'clear';
   }
 
   // user click on the equal key
@@ -76,11 +99,15 @@ function mainFunc(e) {
     const secondValue = displayedNum;
 
     display.textContent = calculate(firstValue, operator, secondValue);
+
+    container.dataset.previousKeyType = 'equal';
   }
 
   // user click on the delete button
   if(action === 'delete') {
     console.log("you are pressed on the delete key");
+
+    container.dataset.previousKeyType = 'delete';
   }
 
 }
