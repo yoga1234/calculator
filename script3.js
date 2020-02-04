@@ -9,19 +9,23 @@ const container = document.querySelector('.container');
 
 // function for calculating the result
 const calculate = (n1, operator, n2) => {
-  let result = '';
+
+  const firstNum = parseFloat(n1);
+  const secondNum = parseFloat(n2);
 
   if(operator === 'add') {
-    result = parseFloat(n1) + parseFloat(n2);
-  } else if(operator === 'subtract') {
-    result = parseFloat(n1) - parseFloat(n2);
-  } else if(operator === 'multiply') {
-    result = parseFloat(n1) * parseFloat(n2);
-  } else if(operator === 'divide') {
-    result = parseFloat(n1) / parseFloat(n2);
+    return firstNum + secondNum;
+  } 
+  if(operator === 'subtract') {
+    return firstNum - secondNum;
+  }
+  if(operator === 'multiply') {
+    return firstNum * secondNum;
+  }
+  if(operator === 'divide') {
+    return firstNum / secondNum;
   }
 
-  return result;
 }
 
 // main calculator function
@@ -37,7 +41,11 @@ function mainFunc(e) {
   
   // user click on the number key
   if(action === 'number') {
-    if(displayedNum === '0' || previousKeyType === 'operator') {
+    if(
+      displayedNum === '0' || 
+      previousKeyType === 'operator' ||
+      previousKeyType === 'calculate'
+    ) {
       display.textContent = keyContent;
     } else {
       display.textContent = displayedNum + keyContent;
@@ -61,16 +69,23 @@ function mainFunc(e) {
     if(
       firstValue && 
       operator &&
-      previousKeyType !== 'operator'
+      previousKeyType !== 'operator' &&
+      previousKeyType !== 'calculate'
     ) {
-      display.textContent = calculate(firstValue, operator, secondValue);
+      const calcValue = calculate(firstValue, operator, secondValue);
+      display.textContent = calcValue;
+
+      // update calculated value as firstValue
+      container.dataset.firstValue = calcValue
+    } else {
+      // if there are no calculations, set displayedNum as the firstValue
+      container.dataset.firstValue = displayedNum;
     }
 
     key.classList.add('key-pressed');
     // add custom attribute
     container.dataset.previousKeyType = 'operator';
     // saving the calculation value
-    container.dataset.firstValue = displayedNum;
     container.dataset.operator = action;
   }
 
@@ -80,7 +95,10 @@ function mainFunc(e) {
     if(!displayedNum.includes('.')) {
       display.textContent = displayedNum + '.';
     }
-    if(previousKeyType === 'operator') {
+    if(
+      previousKeyType === 'operator' ||
+      previousKeyType === 'equal'
+    ) {
       display.textContent = '0.';
     }
     container.dataset.previousKeyType = 'decimal';
@@ -88,24 +106,40 @@ function mainFunc(e) {
 
   // user click on the clear key
   if(action === 'clear') {
-    console.log("you are pressed on the clear key");
+    // reset calculator to its initial state
+    container.dataset.firstValue = '';
+    container.dataset.modValue = '';
+    container.dataset.operator = '';
+    container.dataset.previousKeyType = '';
+    display.textContent = 0;
+
     container.dataset.previousKeyType = 'clear';
   }
 
   // user click on the equal key
   if(action === 'equal') {
-    const firstValue = container.dataset.firstValue;
-    const operator = container.dataset.operator;
-    const secondValue = displayedNum;
+    let firstValue = container.dataset.firstValue;
+    let operator = container.dataset.operator;
+    let secondValue = displayedNum;
 
-    display.textContent = calculate(firstValue, operator, secondValue);
+    // check if user already enter number
+    if(firstValue) {
+      if(previousKeyType === 'equal') {
+        firstValue = displayedNum;
+        secondValue = container.dataset.modValue;
+      }
+      display.textContent = calculate(firstValue, operator, secondValue);
+    }
 
+    // set modValue attribute
+    container.dataset.modValue = secondValue;
     container.dataset.previousKeyType = 'equal';
   }
 
   // user click on the delete button
   if(action === 'delete') {
-    console.log("you are pressed on the delete key");
+    // remove the current entry
+    display.textContent = 0;
 
     container.dataset.previousKeyType = 'delete';
   }
